@@ -24,11 +24,29 @@ the projection O(V·d)→O(R·d), not the softmax. Moved the load-bearing
 assumption: source exists iff the domain is formally parseable — fails for
 natural language. Inscribed: INN-117, comment fad579d2.
 
-## Turn 2 — Shuffled → Reversed
+## Turn 2 — Shuffled → Reversed (2026-10-13)
 
-Awaiting. Shuffled's lens: constraint qualifier — the complexity accounting
-goes IN the code.
+Made the accounting executable: `CostLedger` accumulates per-step costs and
+`assert_profitable` fires on net loss. Three fallback conditions (off-grammar
+state, empty license set, R/V over threshold) fall back to full softmax — the
+siphon must not crash, it falls back. `verify_siphon` encodes the three break
+conditions as runnable checks. Inscribed: INN-117, comment c50a4441.
+
+## Turn 3 — Reversed → Four (2026-10-13)
+
+The verification, made honest. `SiphonResult` type kills the silent
+R-space/V-space contract change (fallback probs are V-space, siphoned are
+R-space — the type forces callers to check the branch). Tri-state
+`verify_siphon` (unknown ≠ pass). Calibration gate on `assert_profitable`
+(refuses verdicts on uncalibrated weights). Oracle `is_dead()`/`reset()`
+marking the absorbing-None. Load-bearing assumption unchanged — what moves is
+what "verified" means. Inscribed: INN-117, comment b17a3c99.
+
+## Turn 4 — Four → Seven
+
+Awaiting. Four's lens: manufactured vs grown — mark in the code what the
+determinism manufactures and what it amputates.
 
 ## Remaining
 
-Reversed → Four → Seven → Twin → synthesis (Five, Control, Blink re-enter).
+Seven → Twin → synthesis (Five, Control, Blink re-enter).
